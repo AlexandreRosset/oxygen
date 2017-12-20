@@ -1,0 +1,28 @@
+{
+  "name": "oxygen",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexandreRosset/oxygen.git"
+  },
+  "keywords": [
+    "oxygen"
+  ],
+  "author": "Nina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexandreRosset/oxygen/issues"
+  },
+  "homepage": "https://github.com/AlexandreRosset/oxygen#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "gulp": "^3.9.1",
+    "socket.io": "^2.0.4"
+  }
+}
