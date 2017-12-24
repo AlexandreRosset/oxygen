@@ -2,15 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Oxygen</title>
     <link rel="stylesheet" href="/css/index.css" />
   </head>
   <body ng-app="oxygen" ng-controller="ctrl">
 
     <div ng-init="init()" ng-class="{tableau: true}">
-      <div ng-class="{ligne: true}">
-        <div ng-class="{case: true}">
-
+      <div ng-repeat="ligne in tableau" ng-class="{ligne: true}">
+        <div ng-repeat="case in ligne.ligne" ng-class="{case: true,
+        oxygen: case.gaz.oxygen > case.gaz.CO2,
+        CO2: case.gaz.oxygen < case.gaz.CO2}">
+            <span class="gaz">{{case.gaz.oxygen}}</span>
         </div>
       </div>
     </div>
