@@ -6,16 +6,40 @@ app.controller('ctrl', function ($scope, $interval) {
 
     $scope.init = function () {
         for (var i = 0; i < 15; i++) {
-            $scope.tableau.push({"ligne":[]});
+            $scope.tableau.push({"ligne": []});
             for (var j = 0; j < 15; j++) {
                 $scope.tableau[i].ligne.push($scope.newCell(i, j));
             }
         }
-        /*$scope.generateWorld('flat');*/
+        $scope.generateWorld('flat');
     };
 
-    $scope.generateWorld = function () {
+    $scope.generateWorld = function (type) {
+        switch (type) {
+            case 'flat':
+                for (var i = 10; i < 15; i++) {
+                    for (var j = 0; j < 15; j++) {
+                        $scope.tableau[i].ligne[j] = $scope.GenPierre(i, j);
+                    }
+                }
+                break;
+            default:
+                $scope.generateWorld('flat');
+                break;
+        }
+    };
 
+    $scope.GenPierre = function (i, j) {
+        return {
+            "i": i,
+            "j": j,
+            "gaz": {
+                "oxygen": 0,
+                "CO2": 0
+            },
+            "solid": true,
+            "sNom": 'pierre'
+        }
     };
 
     $scope.newCell = function (i, j) {
@@ -23,10 +47,11 @@ app.controller('ctrl', function ($scope, $interval) {
             "i": i,
             "j": j,
             "gaz": {
-                "oxygen": Math.floor(Math.random()*1000),
-                "CO2": Math.floor(Math.random()*1000)
+                "oxygen": Math.floor(Math.random() * 1000),
+                "CO2": Math.floor(Math.random() * 1000)
             },
-            "solid": false
+            "solid": false,
+            "sNom": ''
         }
     };
 
@@ -35,21 +60,20 @@ app.controller('ctrl', function ($scope, $interval) {
             for (var j = 0; j < 15; j++) {
 
 
-
-                if (i - 1 >= 0 && !$scope.tableau[i-1].ligne[j].solid) {
+                if (i - 1 >= 0 && !$scope.tableau[i - 1].ligne[j].solid) {
                     for (var k = 0; k < ($scope.tableau[i].ligne[j].gaz.oxygen + $scope.tableau[i].ligne[j].gaz.CO2) / 10; k++) {
-                        var choix = Math.floor(Math.random()*2);
-                        switch (choix){
+                        var choix = Math.floor(Math.random() * 2);
+                        switch (choix) {
                             case 0:
                                 if ($scope.tableau[i].ligne[j].gaz.oxygen > 0) {
                                     $scope.tableau[i].ligne[j].gaz.oxygen -= 1;
-                                    $scope.tableau[i-1].ligne[j].gaz.oxygen += 1;
+                                    $scope.tableau[i - 1].ligne[j].gaz.oxygen += 1;
                                 }
                                 break;
                             case 1:
                                 if ($scope.tableau[i].ligne[j].gaz.CO2 > 0) {
                                     $scope.tableau[i].ligne[j].gaz.CO2 -= 1;
-                                    $scope.tableau[i-1].ligne[j].gaz.CO2 += 1;
+                                    $scope.tableau[i - 1].ligne[j].gaz.CO2 += 1;
                                 }
                                 break;
                             default:
@@ -60,21 +84,20 @@ app.controller('ctrl', function ($scope, $interval) {
                 }
 
 
-
-                if (i + 1 <= 14 && !$scope.tableau[i+1].ligne[j].solid) {
+                if (i + 1 <= 14 && !$scope.tableau[i + 1].ligne[j].solid) {
                     for (var k = 0; k < ($scope.tableau[i].ligne[j].gaz.oxygen + $scope.tableau[i].ligne[j].gaz.CO2) / 10; k++) {
-                        var choix = Math.floor(Math.random()*2);
-                        switch (choix){
+                        var choix = Math.floor(Math.random() * 2);
+                        switch (choix) {
                             case 0:
                                 if ($scope.tableau[i].ligne[j].gaz.oxygen > 0) {
                                     $scope.tableau[i].ligne[j].gaz.oxygen -= 1;
-                                    $scope.tableau[i+1].ligne[j].gaz.oxygen += 1;
+                                    $scope.tableau[i + 1].ligne[j].gaz.oxygen += 1;
                                 }
                                 break;
                             case 1:
                                 if ($scope.tableau[i].ligne[j].gaz.CO2 > 0) {
                                     $scope.tableau[i].ligne[j].gaz.CO2 -= 1;
-                                    $scope.tableau[i+1].ligne[j].gaz.CO2 += 1;
+                                    $scope.tableau[i + 1].ligne[j].gaz.CO2 += 1;
                                 }
                                 break;
                             default:
@@ -85,21 +108,20 @@ app.controller('ctrl', function ($scope, $interval) {
                 }
 
 
-
-                if (j - 1 >= 0 && !$scope.tableau[i].ligne[j-1].solid) {
+                if (j - 1 >= 0 && !$scope.tableau[i].ligne[j - 1].solid) {
                     for (var k = 0; k < ($scope.tableau[i].ligne[j].gaz.oxygen + $scope.tableau[i].ligne[j].gaz.CO2) / 10; k++) {
-                        var choix = Math.floor(Math.random()*2);
-                        switch (choix){
+                        var choix = Math.floor(Math.random() * 2);
+                        switch (choix) {
                             case 0:
                                 if ($scope.tableau[i].ligne[j].gaz.oxygen > 0) {
                                     $scope.tableau[i].ligne[j].gaz.oxygen -= 1;
-                                    $scope.tableau[i].ligne[j-1].gaz.oxygen += 1;
+                                    $scope.tableau[i].ligne[j - 1].gaz.oxygen += 1;
                                 }
                                 break;
                             case 1:
                                 if ($scope.tableau[i].ligne[j].gaz.CO2 > 0) {
                                     $scope.tableau[i].ligne[j].gaz.CO2 -= 1;
-                                    $scope.tableau[i].ligne[j-1].gaz.CO2 += 1;
+                                    $scope.tableau[i].ligne[j - 1].gaz.CO2 += 1;
                                 }
                                 break;
                             default:
@@ -109,21 +131,20 @@ app.controller('ctrl', function ($scope, $interval) {
                 }
 
 
-
-                if (j + 1 <= 14 && !$scope.tableau[i].ligne[j+1].solid) {
+                if (j + 1 <= 14 && !$scope.tableau[i].ligne[j + 1].solid) {
                     for (var k = 0; k < ($scope.tableau[i].ligne[j].gaz.oxygen + $scope.tableau[i].ligne[j].gaz.CO2) / 10; k++) {
-                        var choix = Math.floor(Math.random()*2);
-                        switch (choix){
+                        var choix = Math.floor(Math.random() * 2);
+                        switch (choix) {
                             case 0:
                                 if ($scope.tableau[i].ligne[j].gaz.oxygen > 0) {
                                     $scope.tableau[i].ligne[j].gaz.oxygen -= 1;
-                                    $scope.tableau[i].ligne[j+1].gaz.oxygen += 1;
+                                    $scope.tableau[i].ligne[j + 1].gaz.oxygen += 1;
                                 }
                                 break;
                             case 1:
                                 if ($scope.tableau[i].ligne[j].gaz.CO2 > 0) {
                                     $scope.tableau[i].ligne[j].gaz.CO2 -= 1;
-                                    $scope.tableau[i].ligne[j+1].gaz.CO2 += 1;
+                                    $scope.tableau[i].ligne[j + 1].gaz.CO2 += 1;
                                 }
                                 break;
                             default:
